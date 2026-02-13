@@ -42,7 +42,7 @@ struct Vehicle: Codable, Identifiable {
     var offRoute: Bool
     var routeColor: String
     var routeNumber: Int
-    var routeSubType: RouteSubtype
+    var routeSubType: TransitRouteSubtype
     var serviceDate: MTLTimestamp
     var signMessage: String
     var signMessageLong: String
@@ -52,7 +52,7 @@ struct Vehicle: Codable, Identifiable {
     var type: VehicleType
     var vehicleID: Int
     var id: Int {
-        vehicleID
+        vehicleID  // FIXME: this may not be a unique ID
     }
 }
 

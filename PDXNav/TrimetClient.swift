@@ -31,10 +31,10 @@ class TrimetClient {
         return response?.resultSet.vehicle ?? []
     }
     
-    @Sendable func fetchRouteList() async throws -> [Route] {
+    @Sendable func fetchRouteList() async throws -> [TransitRoute] {
         let response = try await fetchTransitData(
             endpoint: "v1/routeConfig",
-            model: RouteConfigResponseModel.self
+            model: TransitRouteConfigResponseModel.self
         )
         return response?.resultSet.route ?? []
     }

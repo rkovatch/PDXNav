@@ -4,7 +4,7 @@ import Observation
 
 @Observable
 class TransitData {
-    var routeList: [Route] = []
+    var routeList: [TransitRoute] = []
     var vehicleList: [Vehicle] = []
     var isFirstLoad: Bool = true
 }
@@ -29,7 +29,6 @@ struct SettingsTabView: View {
     }
 }
 
-
 struct LinesTabView: View {
     @Environment(TransitData.self) var data
     
@@ -45,8 +44,10 @@ struct LinesTabView: View {
                 }
             } label: {
                 HStack {
-                    Circle()
-                        .fill(Color(hex: route.routeColor))
+                    Image(
+                        systemName: route.type == .rail ? "lightrail.fill" : "bus.fill"
+                    )
+                        .foregroundStyle(Color(hex: route.routeColor))
                         .frame(width: 10, height: 10)
                     Text(route.desc)
                         .font(.headline)
@@ -76,7 +77,7 @@ struct BottomSheetView: View {
     }
 }
 
-struct TransitMapView: View {
+struct MainView: View {
     @Environment(TrimetClient.self) var client
     @State private var data = TransitData()
     @State private var showBottomSheet = true
@@ -85,8 +86,24 @@ struct TransitMapView: View {
     var body: some View {
         Map {
             ForEach(data.vehicleList) { vehicle in
-                Marker(vehicle.signMessage, monogram: Text(vehicle.signMessageLong.components(separatedBy: " ")[0]), coordinate: CLLocationCoordinate2D(latitude: vehicle.latitude, longitude: vehicle.longitude))
-                    .tint(Color(hex: vehicle.routeColor))
+                Annotation(
+                    vehicle.signMessage,
+                    coordinate: CLLocationCoordinate2D(
+                        latitude: vehicle.latitude,
+                        longitude: vehicle.longitude
+                    )
+                ) {
+                    if let vehicleBearing = vehicle.bearing {
+                        Image(systemName: "arrowshape.up.circle.fill")
+                            .foregroundStyle(Color(hex: vehicle.routeColor))
+                            .rotationEffect(Angle(degrees: Double(vehicleBearing)))
+                            .frame(width: 10, height: 10)
+                    } else {
+                        Image(systemName: "smallcircle.filled.circle.fill")
+                            .foregroundStyle(Color(hex: vehicle.routeColor))
+                            .frame(width: 10, height: 10)
+                    }
+                }
             }
         }
 #if os(iOS)
@@ -119,5 +136,5 @@ struct TransitMapView: View {
 }
 
 #Preview {
-    TransitMapView()
+    MainView()
 }

@@ -1,9 +1,9 @@
-enum RouteType: String, Codable {
+enum TransitRouteType: String, Codable {
     case bus = "B"
     case rail = "R"
 }
 
-enum RouteSubtype: String, Codable {
+enum TransitRouteSubtype: String, Codable {
     case aerialTram = "Aerial Tram"
     case BRT = "BRT"
     case bus = "Bus"
@@ -12,7 +12,7 @@ enum RouteSubtype: String, Codable {
     case streetcar = "Streetcar"
 }
 
-struct Route: Codable, Identifiable {
+struct TransitRoute: Codable, Identifiable {
     var id: Int
     var desc: String
     var detour: Bool?
@@ -20,15 +20,15 @@ struct Route: Codable, Identifiable {
     var route: Int
     var routeColor: String
     var routeSortOrder: Int
-    var routeSubType: RouteSubtype
-    var type: RouteType
+    var routeSubType: TransitRouteSubtype
+    var type: TransitRouteType
     var activeVehicles: Array<Vehicle>?
 }
 
-struct RouteConfigResultSet: Codable {
-    var route: Array<Route>
+struct TransitRouteConfigResultSet: Codable {
+    var route: Array<TransitRoute>
 }
 
-struct RouteConfigResponseModel: Codable {
-    var resultSet: RouteConfigResultSet
+struct TransitRouteConfigResponseModel: Codable {
+    var resultSet: TransitRouteConfigResultSet
 }

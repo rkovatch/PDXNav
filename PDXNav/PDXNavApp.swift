@@ -21,7 +21,7 @@ struct PDXNavApp: App {
     
     var body: some Scene {
         WindowGroup {
-            TransitMapView()
+            MainView()
         }
         .environment(client)
     }
