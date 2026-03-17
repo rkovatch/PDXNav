@@ -32,6 +32,13 @@ struct MainView: View {
                             .foregroundStyle(Color(hex: vehicle.routeColor))
                             .rotationEffect(Angle(degrees: Double(vehicleBearing)))
                             .frame(width: 10, height: 10)
+                            .overlay(
+                                Image(systemName: "arrowshape.up.circle")
+                                    .resizable()
+                                    .rotationEffect(Angle(degrees: Double(vehicleBearing)))
+                                    .foregroundStyle(Color.primary)
+                                    .frame(width: 18, height: 18)
+                            )
                     } else {
                         Image(systemName: "smallcircle.filled.circle.fill")
                             .foregroundStyle(Color(hex: vehicle.routeColor))
