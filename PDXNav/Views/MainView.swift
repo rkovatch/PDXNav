@@ -6,6 +6,7 @@ import Observation
 class TransitData {
     var routeList: [TransitRoute] = []
     var vehicleList: [Vehicle] = []
+    var refreshInterval: Int = 5
     var isFirstLoad: Bool = true
 }
 
@@ -51,12 +52,16 @@ struct MainView: View {
         }
 #endif
         .task {
-            async let routes = client.fetchRouteList()
-            async let vehicles = client.fetchVehicleList()
-            
-            data.routeList = (try? await routes) ?? []
-            data.vehicleList = (try? await vehicles) ?? []
-            data.isFirstLoad = false
+            while true {
+                async let routes = client.fetchRouteList()
+                async let vehicles = client.fetchVehicleList()
+                
+                data.routeList = (try? await routes) ?? []
+                data.vehicleList = (try? await vehicles) ?? []
+                data.isFirstLoad = false
+                
+                try? await Task.sleep(for: .seconds(data.refreshInterval))
+            }
         }
     }
 }
