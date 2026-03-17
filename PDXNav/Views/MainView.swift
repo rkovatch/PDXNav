@@ -5,6 +5,7 @@ import Observation
 @Observable
 class TransitData {
     var routeList: [TransitRoute] = []
+    var favoriteRoutes: Set<Int> = []  // stores route IDs
     var vehicleList: [Vehicle] = []
     var refreshInterval: Int = 5
     var isFirstLoad: Bool = true

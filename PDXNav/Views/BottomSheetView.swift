@@ -19,7 +19,9 @@ struct BottomSheetView: View {
                 }
                 
                 Tab("Favorites", systemImage: "star") {
-                    EmptyView()
+                    NavigationStack {
+                        FavoriteRoutesView()
+                    }
                 }
                 
                 Tab("Settings", systemImage: "gear") {

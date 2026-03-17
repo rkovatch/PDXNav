@@ -19,13 +19,32 @@ struct LinesTabView: View {
                 }
             } label: {
                 HStack {
-                    Image(
-                        systemName: route.type == .rail ? "lightrail.fill" : "bus.fill"
-                    )
+                    Group {
+                        Image(
+                            systemName: route.type == .rail ? "lightrail.fill" : "bus.fill"
+                        )
                         .foregroundStyle(Color(hex: route.routeColor))
                         .frame(width: 10, height: 10)
-                    Text(route.desc)
-                        .font(.headline)
+                        Text(route.desc)
+                            .font(.headline)
+                        Spacer()
+                    }
+                    .allowsHitTesting(false)  // prevent the entire label from activating the button
+                    
+                    Button {
+                        if data.favoriteRoutes.contains(route.id) {
+                            data.favoriteRoutes.remove(route.id)
+                        } else {
+                            data.favoriteRoutes.insert(route.id)
+                        }
+                    } label: {
+                        Image(systemName: data.favoriteRoutes.contains(route.id) ? "star.fill" : "star")
+                            .foregroundStyle(
+                                data.favoriteRoutes.contains(route.id) ? Color.accentColor : Color.secondary
+                            )
+                            .contentShape(Rectangle())  // to restrict the Button's touch target
+                    }
+                    .buttonStyle(.plain)
                 }
             }
         }
