@@ -12,7 +12,7 @@ struct LinesTabView: View {
             DisclosureGroup {
                 ForEach(data.vehicleList.filter {$0.routeNumber == route.id}) { vehicle in
                     NavigationLink(destination: {
-                        VehicleDetailView(vehicle: vehicle)
+                        VehicleDetailView(vehicleId: vehicle.id)
                     }, label: {
                         Text(vehicle.signMessageLong)
                     })

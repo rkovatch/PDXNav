@@ -13,7 +13,7 @@ struct FavoriteRoutesView: View {
                 DisclosureGroup {
                     ForEach(data.vehicleList.filter {$0.routeNumber == routeId}) { vehicle in
                         NavigationLink(destination: {
-                            VehicleDetailView(vehicle: vehicle)
+                            VehicleDetailView(vehicleId: vehicle.id)
                         }, label: {
                             Text(vehicle.signMessageLong)
                         })
